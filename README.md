@@ -22,7 +22,7 @@ Publish in private Container Registry:
 az bicep publish --file ./iac/modules/storage.bicep --target br:codemasters7ii2xg.azurecr.io/modules/storage:1.0
 ```
 
-## Link Liste
+## Links
 
 - [Code Repository](https://github.com/mwiedemeyer/codemasters2023)
 - [Bicep file structure](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/file)
