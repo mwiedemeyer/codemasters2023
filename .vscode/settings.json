@@ -1,5 +1,5 @@
 {
-  "window.zoomLevel": 4,
+  "window.zoomLevel": 0,
   "[bicep]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-bicep",
     "editor.insertSpaces": true,

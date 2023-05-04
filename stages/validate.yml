@@ -1,0 +1,13 @@
+stages:
+- stage: Validate
+    jobs:
+      - job: ValidateBicep
+        displayName: Validate Bicep
+        steps:
+          - task: AzureCLI@2
+            displayName: "Validate Bicep with what-if"
+            inputs:
+              azureSubscription: 'Marco Quibiq VS Enterprise (aca10aad-2bcd-4cd2-b624-046bfe80b985)'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: 'az deployment sub what-if --template-file ./iac/main.bicep --location westeurope'
