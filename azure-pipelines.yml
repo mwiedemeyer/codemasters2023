@@ -1,21 +1,39 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  branches:
+    include:
+      - '*'
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: Validate
+    jobs:
+      - job: ValidateBicep
+        displayName: Validate Bicep
+        steps:
+          - task: AzureCLI@2
+            displayName: "Validate Bicep with what-if"
+            inputs:
+              azureSubscription: 'tbd'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: 'az deployment sub what-if --template-file ./iac/main.bicep --location westeurope'
 
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'Marco Quibiq VS Enterprise (aca10aad-2bcd-4cd2-b624-046bfe80b985)'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az deployment sub create --template-file ./main.bicep --location westeurope'
+  - stage: Deploy
+    jobs:
+      - deployment: Deployment
+        displayName: Deploy Azure infrastructure
+        environment: Development
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  displayName: "Deploy Azure infrastructure"
+                  inputs:
+                    azureSubscription: 'tbd'
+                    scriptType: "bash"
+                    scriptLocation: "inlineScript"
+                    inlineScript: "az deployment sub create --template-file ./iac/main.bicep --location westeurope"
