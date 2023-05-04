@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 @allowed([ 'westeurope', 'northeurope' ])
-param location string
+param location string = 'westeurope'
 
 param deployStorage bool = false
 
