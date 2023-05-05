@@ -1,20 +1,20 @@
 targetScope = 'subscription'
 
 @allowed([ 'westeurope', 'northeurope' ])
-param location string = 'westeurope'
+param location string
 
-param deployStorage bool = false
+param deployStorage bool = true
 
-param storages array = [
-  {
-    name: 'storage1'
-    location: location
-  }
-  {
-    name: 'storage2'
-    location: location
-  }
-]
+// param storages array = [
+//   {
+//     name: 'storage1'
+//     location: location
+//   }
+//   {
+//     name: 'storage2'
+//     location: location
+//   }
+// ]
 
 var suffix = substring(uniqueString(subscription().id, location), 6)
 
@@ -26,7 +26,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   }
 }
 
-module storage 'br:codemastersbjwbiq2.azurecr.io/modules/storage:1.0' = {
+module storage 'module/storage.bicep' = if (deployStorage) {
   name: 'storage'
   scope: rg
   params: {
@@ -34,6 +34,15 @@ module storage 'br:codemastersbjwbiq2.azurecr.io/modules/storage:1.0' = {
     suffix: suffix
   }
 }
+
+// module storage 'br:codemastersbjwbiq2.azurecr.io/modules/storage:1.0' = {
+//   name: 'storage'
+//   scope: rg
+//   params: {
+//     location: location
+//     suffix: suffix
+//   }
+// }
 
 module acr 'module/acr.bicep' = {
   name: 'acr'

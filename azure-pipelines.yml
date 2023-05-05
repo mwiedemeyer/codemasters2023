@@ -18,7 +18,7 @@ stages:
               azureSubscription: 'Marco Quibiq VS Enterprise (aca10aad-2bcd-4cd2-b624-046bfe80b985)'
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
-              inlineScript: 'az deployment sub what-if --template-file ./main.bicep --location westeurope'
+              inlineScript: 'az deployment sub what-if --template-file ./main.bicep --parameters ./main.parameters.json --location westeurope'
 
   - stage: Deploy
     jobs:
@@ -36,4 +36,4 @@ stages:
                     azureSubscription: 'Marco Quibiq VS Enterprise (aca10aad-2bcd-4cd2-b624-046bfe80b985)'
                     scriptType: 'bash'
                     scriptLocation: 'inlineScript'
-                    inlineScript: 'az deployment sub create --template-file ./main.bicep --location westeurope'
+                    inlineScript: 'az deployment sub create --template-file ./main.bicep --parameters ./main.parameters.json --location westeurope'
