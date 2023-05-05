@@ -1,6 +1,6 @@
 # Quibiq Codemasters 2023
 
-Demo repository for the Quibiq Codemasters 2023.
+Demo repository for the Quibiq [Codemasters 2023](https://www.quibiq.de/aktuelles/news-meldung/news/detail/News/codemasters/).
 
 ## Deployment
 
